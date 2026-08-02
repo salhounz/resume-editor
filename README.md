@@ -1,4 +1,4 @@
-# Resume Editor
+# Interactive Resume Builder
 
 A self-contained browser app for editing, previewing, and saving a one-page ATS-friendly resume PDF.
 
