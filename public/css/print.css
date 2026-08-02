@@ -1,0 +1,33 @@
+/* Print-only page geometry. */
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .input-panel {
+    display: none;
+  }
+
+  .app-shell {
+    padding: 0;
+  }
+
+  .workspace {
+    display: block;
+    max-width: none;
+  }
+
+  .preview-panel {
+    display: block;
+    overflow: visible;
+  }
+
+  .resume-page {
+    width: 8.5in;
+    height: 11in;
+    min-height: 0;
+    box-shadow: none;
+    padding: 0.32in 0.48in 0.58in;
+    font-size: 10.25pt;
+  }
+}

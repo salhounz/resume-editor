@@ -1,0 +1,537 @@
+/* Resume Editor application and document styles. */
+:root {
+  color-scheme: light;
+  --ink: #161616;
+  --muted: #5c6470;
+  --line: #d9dde3;
+  --panel: #f7f8fa;
+  --accent: #0f766e;
+  --accent-dark: #115e59;
+  --warning: #9a3412;
+  --paper: #ffffff;
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #eceff3;
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(320px, 430px) minmax(0, 1fr);
+  gap: 20px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.input-panel,
+.preview-panel {
+  min-width: 0;
+}
+
+.input-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+  align-self: start;
+}
+
+.panel-header {
+  display: flex;
+  gap: 12px;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.panel-header p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  margin-top: 6px;
+}
+
+label {
+  display: grid;
+  gap: 7px;
+  color: #27313d;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+label + label,
+.field-note + label {
+  margin-top: 14px;
+}
+
+.field-note {
+  min-height: 18px;
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.field-note.warning {
+  color: var(--warning);
+  font-weight: 700;
+}
+
+.status-note {
+  min-height: 20px;
+  margin: -6px 0 14px;
+  color: var(--accent-dark);
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.status-note.warning {
+  color: var(--warning);
+}
+
+textarea,
+input {
+  width: 100%;
+  border: 1px solid #b9c0ca;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  outline: none;
+}
+
+textarea:focus,
+input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.14);
+}
+
+textarea {
+  min-height: 330px;
+  resize: vertical;
+  padding: 12px;
+  line-height: 1.45;
+}
+
+.section-editors {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.editor-launcher {
+  display: grid;
+  gap: 5px;
+  min-height: 88px;
+  padding: 14px;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  transition: border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease;
+}
+
+.editor-launcher:hover,
+.editor-launcher:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+  transform: translateY(-1px);
+}
+
+.editor-launcher-title {
+  color: #17202a;
+  font-size: 0.94rem;
+  font-weight: 800;
+}
+
+.editor-launcher-note {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.section-textarea {
+  width: 100%;
+  min-height: 260px;
+}
+
+.section-textarea.small {
+  min-height: 145px;
+}
+
+.section-textarea.mini {
+  min-height: 78px;
+}
+
+input {
+  min-height: 40px;
+  padding: 8px 10px;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.field-grid.compact {
+  margin-top: 0;
+}
+
+.workflow-row {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0 4px;
+}
+
+.workflow-note {
+  margin: 0;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+button {
+  min-height: 40px;
+  border: 1px solid #b8c0ca;
+  border-radius: 6px;
+  background: #fff;
+  color: #17202a;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+button:hover {
+  border-color: #8290a0;
+}
+
+button.primary {
+  grid-column: 1 / -1;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+button.primary:hover {
+  background: var(--accent-dark);
+}
+
+.icon-button {
+  width: 40px;
+  flex: 0 0 40px;
+  font-size: 1.1rem;
+}
+
+.ats-card {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+
+.ats-card h2 {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.ats-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #334155;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.ats-card li.warning {
+  color: var(--warning);
+}
+
+.preview-panel {
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+}
+
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.58);
+}
+
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.resolution-dialog {
+  width: min(1080px, 100%);
+  max-height: min(860px, calc(100vh - 48px));
+  overflow: auto;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.36);
+}
+
+.editor-dialog {
+  width: min(860px, 100%);
+  max-height: min(820px, calc(100vh - 48px));
+  overflow: auto;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.36);
+}
+
+.editor-modal-body {
+  padding: 18px 20px 20px;
+}
+
+.editor-modal-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 20px 20px;
+}
+
+.editor-action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.editor-action-buttons .primary {
+  grid-column: auto;
+}
+
+.editor-pane {
+  display: none;
+}
+
+.editor-pane.active {
+  display: block;
+}
+
+.editor-pane .field-grid label {
+  margin: 0;
+}
+
+.modal-textarea {
+  min-height: min(560px, calc(100vh - 220px));
+}
+
+.source-textarea {
+  min-height: min(420px, calc(100vh - 240px));
+}
+
+.resolution-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.resolution-header h2 {
+  font-size: 1.15rem;
+}
+
+.resolution-header p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.resolution-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) minmax(360px, 1.2fr);
+  gap: 16px;
+  padding: 18px 20px;
+}
+
+.resolution-card {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 14px;
+}
+
+.resolution-card h3 {
+  margin: 0 0 10px;
+  font-size: 0.98rem;
+}
+
+.resolution-card p,
+.resolution-card li {
+  color: #334155;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.resolution-card ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+}
+
+.diff-view {
+  max-height: 260px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #f8fafc;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.diff-line {
+  margin: 0;
+  padding: 3px 8px;
+  white-space: pre-wrap;
+}
+
+.diff-remove {
+  background: #fee2e2;
+  color: #7f1d1d;
+}
+
+.diff-add {
+  background: #dcfce7;
+  color: #14532d;
+}
+
+.diff-keep {
+  color: #334155;
+}
+
+.solution-card label {
+  margin-top: 12px;
+}
+
+.solution-card textarea {
+  min-height: 260px;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.86rem;
+}
+
+.resolution-preview {
+  max-height: 600px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #eef2f7;
+  padding: 18px;
+}
+
+.resolution-page-shell {
+  position: relative;
+  width: 8.5in;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.resolution-page-preview {
+  height: auto;
+  min-height: 11in;
+  overflow: visible;
+}
+
+.resolution-cutoff {
+  position: absolute;
+  left: -10px;
+  right: -10px;
+  top: 11in;
+  z-index: 2;
+  border-top: 2px dashed #b91c1c;
+  pointer-events: none;
+}
+
+.resolution-cutoff span {
+  position: absolute;
+  right: 0;
+  top: -13px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #b91c1c;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.resolution-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 20px 20px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+@media (max-width: 980px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .section-editors {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-modal-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .editor-action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .resume-page {
+    width: 100%;
+    height: auto;
+    min-height: 11in;
+  }
+
+  .resolution-grid {
+    grid-template-columns: 1fr;
+  }
+}

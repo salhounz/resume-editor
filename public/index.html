@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Editor</title>
+    <link rel="stylesheet" href="/css/resume.css" />
+    <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/print.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="Resume editor">
+        <div class="input-panel">
+          <div class="panel-header">
+            <div>
+              <h1>Resume Editor</h1>
+              <p>Edit each resume section, preview the one-page layout, and save an ATS-friendly PDF.</p>
+            </div>
+            <button id="restoreDefault" class="icon-button" type="button" title="Restore default resume" aria-label="Restore default resume">
+              <span aria-hidden="true">&#8634;</span>
+            </button>
+          </div>
+
+          <div class="workflow-row" aria-label="Resume build workflows">
+            <button id="startBuilding" type="button">Start Building</button>
+            <p class="field-note workflow-note">Work through each section in order, or open any section below to edit it directly.</p>
+          </div>
+
+          <div class="section-editors" aria-label="Editable resume sections">
+            <button class="editor-launcher" type="button" data-editor-target="contactPanel" data-editor-title="Contact & Links" data-editor-description="Edit resume header, contact details, and social links in one place.">
+              <span class="editor-launcher-title">Contact & Links</span>
+              <span class="editor-launcher-note">Name, headline, location, email, phone, social</span>
+            </button>
+
+            <button class="editor-launcher" type="button" data-editor-target="profilePanel" data-editor-title="Profile" data-editor-description="Edit summary text shown at top of resume.">
+              <span class="editor-launcher-title">Profile</span>
+              <span class="editor-launcher-note">Career summary and positioning</span>
+            </button>
+
+            <button class="editor-launcher" type="button" data-editor-target="experiencePanel" data-editor-title="Work Experience" data-editor-description="Edit jobs, dates, and bullet points in one centered workspace.">
+              <span class="editor-launcher-title">Work Experience</span>
+              <span class="editor-launcher-note">Roles, dates, locations, bullets</span>
+            </button>
+
+            <button class="editor-launcher" type="button" data-editor-target="educationPanel" data-editor-title="Education" data-editor-description="Edit degree, school, and completion details.">
+              <span class="editor-launcher-title">Education</span>
+              <span class="editor-launcher-note">Degrees, schools, dates</span>
+            </button>
+
+            <button class="editor-launcher" type="button" data-editor-target="certificationsPanel" data-editor-title="Certifications" data-editor-description="Edit certifications and license entries.">
+              <span class="editor-launcher-title">Certifications</span>
+              <span class="editor-launcher-note">Certs and licenses</span>
+            </button>
+
+            <button class="editor-launcher" type="button" data-editor-target="honorsPanel" data-editor-title="Honors & Awards" data-editor-description="Edit awards, recognitions, and notable honors.">
+              <span class="editor-launcher-title">Honors & Awards</span>
+              <span class="editor-launcher-note">Awards and recognition</span>
+            </button>
+
+            <button class="editor-launcher" type="button" data-editor-target="skillsPanel" data-editor-title="Skills" data-editor-description="Edit skills, grouped capabilities, and keyword coverage.">
+              <span class="editor-launcher-title">Skills</span>
+              <span class="editor-launcher-note">Keywords and grouped skills</span>
+            </button>
+
+            <button class="editor-launcher" type="button" data-editor-target="sourcePanel" data-editor-title="Full resume text" data-editor-description="Edit the complete source text used to populate the section editors.">
+              <span class="editor-launcher-title">Full Resume Text</span>
+              <span class="editor-launcher-note">Complete editable resume source</span>
+            </button>
+          </div>
+
+          <div class="controls">
+            <button id="saveResume" class="primary" type="button">Save Resume</button>
+            <button id="downloadPdf" type="button">Download PDF</button>
+            <button id="printResume" type="button">Print PDF</button>
+          </div>
+          <p id="generateStatus" class="status-note" aria-live="polite"></p>
+
+          <div class="ats-card" aria-live="polite">
+            <h2>ATS Checks</h2>
+            <ul id="atsChecks"></ul>
+          </div>
+        </div>
+
+        <div class="preview-panel">
+          <article id="resume" class="resume-page" aria-label="Generated resume preview"></article>
+        </div>
+      </section>
+    </main>
+
+    <div id="resolutionModal" class="modal-backdrop" hidden>
+      <section class="resolution-dialog" role="dialog" aria-modal="true" aria-labelledby="resolutionTitle">
+        <div class="resolution-header">
+          <div>
+            <h2 id="resolutionTitle">One-page review required</h2>
+            <p>The resume content exceeds the one-page ATS template. Review and approve a shorter editable version before applying it.</p>
+          </div>
+          <button id="closeResolution" class="icon-button" type="button" aria-label="Close resolution dialog">&times;</button>
+        </div>
+
+        <div class="resolution-grid">
+          <div class="resolution-card error-card">
+            <h3>Error Review</h3>
+            <p id="resolutionError"></p>
+            <ul id="resolutionFindings"></ul>
+          </div>
+
+          <div class="resolution-card solution-card">
+            <h3>Resume Overflow Preview</h3>
+            <div id="resolutionPreview" class="resolution-preview" aria-label="Resume overflow preview">
+              <div class="resolution-page-shell">
+                <div id="resolutionCutoff" class="resolution-cutoff">
+                  <span>One page ends here</span>
+                </div>
+                <article id="resolutionResume" class="resume-page resolution-page-preview" aria-label="Full resume preview"></article>
+              </div>
+            </div>
+            <p id="resolutionStatus" class="field-note" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="resolution-actions">
+          <button id="editResolution" type="button">Edit Resume</button>
+          <button id="closeResolutionAction" class="primary" type="button">Keep Editing</button>
+        </div>
+      </section>
+    </div>
+
+    <div id="editorModal" class="modal-backdrop" hidden>
+      <section class="editor-dialog" role="dialog" aria-modal="true" aria-labelledby="editorModalTitle" aria-describedby="editorModalDescription">
+        <div class="resolution-header editor-modal-header">
+          <div>
+            <h2 id="editorModalTitle">Edit Section</h2>
+            <p id="editorModalDescription">Update resume content in a centered editor.</p>
+          </div>
+          <button id="closeEditorModal" class="icon-button" type="button" aria-label="Close editor dialog">&times;</button>
+        </div>
+
+        <div class="editor-modal-body">
+          <div class="editor-pane" data-editor-panel="contactPanel">
+            <div class="field-grid compact">
+              <label>
+                Name
+                <input id="nameInput" type="text" placeholder="Candidate Name" />
+              </label>
+              <label>
+                Role / headline
+                <input id="headlineInput" type="text" placeholder="Professional Title" />
+              </label>
+              <label>
+                Location
+                <input id="locationInput" type="text" placeholder="City, State" />
+              </label>
+              <label>
+                Email
+                <input id="emailInput" type="email" placeholder="name@example.com" />
+              </label>
+              <label>
+                Phone
+                <input id="phoneInput" type="tel" placeholder="(555) 555-5555" />
+              </label>
+              <label>
+                GitHub / social link
+                <input id="socialInput" type="url" placeholder="https://github.com/username" />
+              </label>
+            </div>
+          </div>
+
+          <div class="editor-pane" data-editor-panel="profilePanel">
+            <textarea id="profileSectionInput" class="section-textarea small modal-textarea" spellcheck="true"></textarea>
+          </div>
+
+          <div class="editor-pane" data-editor-panel="experiencePanel">
+            <textarea id="experienceSectionInput" class="section-textarea modal-textarea" spellcheck="true"></textarea>
+          </div>
+
+          <div class="editor-pane" data-editor-panel="educationPanel">
+            <textarea id="educationSectionInput" class="section-textarea small modal-textarea" spellcheck="true"></textarea>
+          </div>
+
+          <div class="editor-pane" data-editor-panel="certificationsPanel">
+            <textarea id="certificationsSectionInput" class="section-textarea mini modal-textarea" spellcheck="true"></textarea>
+          </div>
+
+          <div class="editor-pane" data-editor-panel="honorsPanel">
+            <textarea id="honorsSectionInput" class="section-textarea mini modal-textarea" spellcheck="true"></textarea>
+          </div>
+
+          <div class="editor-pane" data-editor-panel="skillsPanel">
+            <textarea id="skillsSectionInput" class="section-textarea small modal-textarea" spellcheck="true"></textarea>
+          </div>
+
+          <div class="editor-pane" data-editor-panel="sourcePanel">
+            <label for="profileInput">Resume source text</label>
+            <textarea id="profileInput" class="modal-textarea source-textarea" spellcheck="true" placeholder="Paste or edit complete resume text here..."></textarea>
+          </div>
+        </div>
+
+        <div id="guidedEditorActions" class="editor-modal-actions" hidden>
+          <p id="guidedEditorStatus" class="field-note">Step 1 of 8</p>
+          <div class="editor-action-buttons">
+            <button id="guidedBack" type="button">Back</button>
+            <button id="guidedNext" class="primary" type="button">Next</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>
