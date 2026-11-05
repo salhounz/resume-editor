@@ -1,4 +1,4 @@
-/* Resume Editor application and document styles. */
+/* Application interface and shared base styles. */
 :root {
   color-scheme: light;
   --ink: #161616;
@@ -525,11 +525,6 @@ button:disabled {
     grid-template-columns: 1fr 1fr;
   }
 
-  .resume-page {
-    width: 100%;
-    height: auto;
-    min-height: 11in;
-  }
 
   .resolution-grid {
     grid-template-columns: 1fr;

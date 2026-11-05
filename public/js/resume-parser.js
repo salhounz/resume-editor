@@ -25,7 +25,7 @@ const monthMap = new Map([
   ["december", "12"],
 ]);
 
-export class ResumeAgent {
+export class ResumeParser {
   create(profileText) {
     const lines = this.cleanLines(profileText);
     const sections = this.splitSections(lines);

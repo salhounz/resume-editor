@@ -1,4 +1,5 @@
 node_modules/
 tmp/
 *.log
+saved-resumes/*.pdf
 artifacts/*.pdf

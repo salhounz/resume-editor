@@ -1,4 +1,4 @@
-import { groupWorkByCompany } from "../resume/renderer.js";
+import { escapeHtml, groupWorkByCompany } from "./resume-preview.js";
 
 function pdfEscape(text) {
   return String(text)
@@ -180,4 +180,70 @@ export function createPdf(resume) {
   });
   pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
   return new Blob([pdf], { type: "application/pdf" });
+}
+
+export function printResumePdf(resume, resumeElement, onReady = () => {}) {
+
+  const iframe = document.createElement("iframe");
+  iframe.style.position = "fixed";
+  iframe.style.right = "0";
+  iframe.style.bottom = "0";
+  iframe.style.width = "0";
+  iframe.style.height = "0";
+  iframe.style.border = "0";
+  iframe.setAttribute("aria-hidden", "true");
+
+  const printTitle = resumeFileBaseName(resume);
+  const html = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>${escapeHtml(printTitle)}</title>
+    <link rel="stylesheet" href="/css/resume-layout.css" />
+    <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/print.css" />
+    <style>
+      body { margin: 0; background: #fff; }
+      .print-shell { display: flex; justify-content: center; padding: 0; }
+      .resume-page { box-shadow: none; }
+      @page { size: letter; margin: 0; }
+    </style>
+  </head>
+  <body>
+    <main class="print-shell">${resumeElement.outerHTML}</main>
+  </body>
+</html>`;
+
+  iframe.srcdoc = html;
+  document.body.appendChild(iframe);
+
+  const cleanup = () => {
+    iframe.remove();
+    window.removeEventListener("focus", cleanup);
+  };
+
+  iframe.addEventListener("load", () => {
+    const frameWindow = iframe.contentWindow;
+    if (!frameWindow) {
+      cleanup();
+      return;
+    }
+    window.addEventListener("focus", cleanup, { once: true });
+    onReady();
+    frameWindow.focus();
+    frameWindow.print();
+  });
+}
+
+export function downloadResumePdf(resume) {
+
+  const blob = createPdf(resume);
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = `${resumeFileBaseName(resume)}.pdf`;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
 }

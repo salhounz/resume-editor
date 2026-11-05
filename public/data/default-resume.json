@@ -1,0 +1,14 @@
+{
+  "name": "Candidate Name",
+  "headline": "Professional Title",
+  "location": "City, State",
+  "email": "candidate@example.com",
+  "phone": "(555) 555-0100",
+  "social": "https://github.com/username",
+  "profile": "Results-driven professional with experience delivering measurable outcomes, improving processes, and collaborating across teams. Replace this summary with two or three sentences highlighting your strongest qualifications, relevant experience, and career goals.",
+  "experience": "Company Name - City, State\nJob Title | 01/2023 - Present\nDescribe a major responsibility using a strong action verb and relevant context.\nHighlight a measurable achievement, such as time saved, revenue gained, quality improved, or customers served.\nExplain how you collaborated with teammates or stakeholders to deliver a meaningful result.\n\nPrevious Company - City, State\nPrevious Job Title | 01/2020 - 12/2022\nSummarize the scope of your role and the value you provided.\nInclude a specific accomplishment that demonstrates a relevant skill.",
+  "education": "Degree or Certification\nSchool or Institution\n05/2020",
+  "certifications": "",
+  "honors": "",
+  "skills": "Core Skills: Skill One, Skill Two, Skill Three\nTools & Technologies: Tool One, Tool Two, Tool Three\nProfessional Strengths: Communication, Collaboration, Problem Solving"
+}

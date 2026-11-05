@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
 const path = require('path');
 
-function sanitizeArtifactBaseName(value) {
+function sanitizePdfBaseName(value) {
   const safeName = String(value || 'Candidate-Resume')
     .replace(/\.pdf$/i, '')
     .replace(/[^a-z0-9-]+/gi, '-')
@@ -10,22 +10,22 @@ function sanitizeArtifactBaseName(value) {
   return safeName || 'Candidate-Resume';
 }
 
-async function writeVersionedArtifact(artifactsDirectory, baseName, pdfBuffer) {
-  await fs.mkdir(artifactsDirectory, { recursive: true });
-  const safeBaseName = sanitizeArtifactBaseName(baseName);
+async function saveVersionedPdf(savedResumesDirectory, baseName, pdfBuffer) {
+  await fs.mkdir(savedResumesDirectory, { recursive: true });
+  const safeBaseName = sanitizePdfBaseName(baseName);
 
   for (let version = 1; version < Number.MAX_SAFE_INTEGER; version += 1) {
     const filename = `${safeBaseName}-V${version}.pdf`;
-    const artifactPath = path.join(artifactsDirectory, filename);
+    const pdfPath = path.join(savedResumesDirectory, filename);
     try {
-      await fs.writeFile(artifactPath, pdfBuffer, { flag: 'wx' });
+      await fs.writeFile(pdfPath, pdfBuffer, { flag: 'wx' });
       return filename;
     } catch (error) {
       if (error.code !== 'EEXIST') throw error;
     }
   }
 
-  throw new Error('Unable to assign an artifact version.');
+  throw new Error('Unable to assign an PDF version.');
 }
 
-module.exports = { sanitizeArtifactBaseName, writeVersionedArtifact };
+module.exports = { sanitizePdfBaseName, saveVersionedPdf };

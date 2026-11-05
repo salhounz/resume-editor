@@ -192,3 +192,11 @@
 .resume-page.fit-condensed .entry li {
   margin-bottom: 1px;
 }
+
+@media (max-width: 980px) {
+  .resume-page {
+    width: 100%;
+    height: auto;
+    min-height: 11in;
+  }
+}
